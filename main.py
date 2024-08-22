@@ -10,9 +10,45 @@ def initialize_driver():
     driver.maximize_window()
     return driver
 
+def install_vimium(driver):
+    driver.get("https://chromewebstore.google.com/detail/vimium/dbepggeogbaibhgnhhndojpepiihcmeb?hl=en")
+
+    time.sleep(1)
+    pyautogui.press('tab', presses=10)
+    time.sleep(1)
+    pyautogui.press('enter', presses=1)
+    time.sleep(1)
+    pyautogui.press('tab', presses=1)
+    time.sleep(1)
+    pyautogui.press('enter', presses=1)
+    time.sleep(5)
+    pyautogui.press('tab', presses=1)
+    time.sleep(1)
+    pyautogui.press('enter', presses=1)
+    time.sleep(1)
+
+def install_ublock_origin(driver):
+    driver.get(" https://chromewebstore.google.com/detail/ublock-origin/cjpalhdlnbpafiamejdnhcphjbkeiagm?hl=en")
+
+    time.sleep(5)
+    pyautogui.press('tab', presses=9)
+    time.sleep(1)
+    pyautogui.press('enter', presses=1)
+    time.sleep(1)
+    pyautogui.press('tab', presses=1)
+    time.sleep(1)
+    pyautogui.press('enter', presses=1)
+    time.sleep(5)
+    pyautogui.press('tab', presses=1)
+    time.sleep(1)
+    pyautogui.press('enter', presses=1)
+    time.sleep(1)
+
 def process_links(driver):
+    # TODO factor out magic file here
     with open('testlinks.txt') as links:
         for link in links:
+            # TODO factor out magic numbers here
             time.sleep(random.randint(0,2))
             driver.switch_to.new_window("tab")
             print(f"Loading: {link.rstrip()}...")
@@ -20,6 +56,7 @@ def process_links(driver):
                 driver.get(link)
                 print(f"Loaded: {link.rstrip()}.")
                 pyautogui.press('tab', presses=4)
+            # Connection refused, etc
             except Exception as e:
                 print(f"Encountered error:\n{e}")
                 pass
@@ -32,6 +69,8 @@ def wait_indefinitely(driver):
 def main():
 
     driver = initialize_driver()
+    install_vimium(driver)
+    install_ublock_origin(driver)
     process_links(driver)
     wait_indefinitely(driver)
     driver.quit()

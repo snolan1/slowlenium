@@ -2,3 +2,4 @@ https://google.com
 https://amazon.com
 https://kernel.org
 https://freebsd.org
+https://gentoo.org
