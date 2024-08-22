@@ -45,7 +45,6 @@ def install_ublock_origin(driver):
     time.sleep(1)
 
 def process_links(driver, link_set='testlinks.txt'):
-    # TODO factor out magic file here
     with open(link_set) as links:
         for link in links:
             # TODO factor out magic numbers here
