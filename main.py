@@ -44,9 +44,9 @@ def install_ublock_origin(driver):
     pyautogui.press('enter', presses=1)
     time.sleep(1)
 
-def process_links(driver):
+def process_links(driver, link_set='testlinks.txt'):
     # TODO factor out magic file here
-    with open('testlinks.txt') as links:
+    with open(link_set) as links:
         for link in links:
             # TODO factor out magic numbers here
             time.sleep(random.randint(0,2))
@@ -71,6 +71,7 @@ def main():
     driver = initialize_driver()
     install_vimium(driver)
     install_ublock_origin(driver)
+    #process_links(driver, './link_sets/group2.html')
     process_links(driver)
     wait_indefinitely(driver)
     driver.quit()
