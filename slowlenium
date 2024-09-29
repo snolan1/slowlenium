@@ -6,7 +6,7 @@ import random
 import pyautogui
 from selenium import webdriver
 
-def parse_arguments():
+def parse_arguments() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
             prog='slowlenium',
             description='Load sets of links sequentially, with some delays',
@@ -16,7 +16,7 @@ def parse_arguments():
     return parser.parse_args()
 
 
-def initialize_driver():
+def initialize_driver() -> webdriver.Chrome:
     driver = webdriver.Chrome()
     driver.maximize_window()
     return driver
