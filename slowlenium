@@ -5,6 +5,8 @@ import time
 import random
 import pyautogui
 from selenium import webdriver
+from selenium.common.exceptions import WebDriverException
+import sys
 
 def parse_arguments() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
@@ -69,10 +71,24 @@ def process_links(driver, link_set):
                 driver.get(link)
                 print(f"Loaded: {link.rstrip()}.")
                 pyautogui.press('tab', presses=4)
-            # Connection refused, etc
-            except Exception as e:
+            # Bail out by moving mouse to corner of screen
+            except pyautogui.FailSafeException as e:
+                print("Mouse moved to screen corner, fail-safe activated. Quitting now.")
                 print(f"Encountered error:\n{e}")
+                print(repr(e))
+                driver.quit()
+                sys.exit(1)
+            # Catch things like Connection Refused
+            except WebDriverException as e:
+                print("Connection was refused...")
+                print(f"Encountered error:\n{e}")
+                print(repr(e))
                 pass
+            except Exception as e:
+                print(f"Encountered exception:\n{e}")
+                print(repr(e))
+                pass
+
             time.sleep(1)
 
 def wait_indefinitely(driver):
